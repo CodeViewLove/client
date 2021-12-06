@@ -2,8 +2,11 @@
   "name": "codepreview-client",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "build/index-cjs.js",
+  "module": "build/index-esm.js",
+  "bin": "build/index-cjs.js",
   "scripts": {
+    "build": "rollup -c",
     "quicktest": "ts-node src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -21,8 +24,14 @@
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-typescript": "^7.16.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
     "@types/jest": "^27.0.3",
     "jest": "^27.4.3",
+    "rollup": "^2.60.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-preserve-shebangs": "^0.2.0",
+    "rollup-plugin-typescript2": "^0.31.1",
     "typescript": "^4.5.2"
   },
   "dependencies": {
