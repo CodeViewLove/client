@@ -1,42 +1,21 @@
-import { mapFiles } from "./map-files";
-import { getParameters } from 'codesandbox/lib/api/define.js';
-import axios from "axios";
+import { postCodebase } from "./post-codebase";
 
-const doIt = async () => {
-  console.log("Start...");
-  const files = await mapFiles('../MISC/sample-divjoy-project');
-  //console.log("ALL", all);
+const { Command } = require('commander');
 
-  console.log("Files listed", Object.keys(files).length);
+const program = new Command();
 
-  const parameters = getParameters({ files });
+program
+  .name('codeviewlove')
+  .version(require('../package.json').version);
 
-  console.log("Got parameters");
-
-  const params = new URLSearchParams();
-  params.append('parameters', parameters);
-
-  console.log("Parameters ready", parameters.length);
-
-  const result = await axios.post('http://localhost:3000/api/v0.1/codebases', params, {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+program
+  .command('upload <codebasePath>')
+  .description('Upload a codebase to CodeViewLove')
+  .option('-s, --service <baseUrl>', 'Service base URL', 'https://codeviewlove.com')
+  .action(async (codebasePath: string, options: { [k: string]: string }) => {
+    //const host = 'https://codeviewlove-production.netlify.app';
+//      const host = 'http://localhost:3000';
+      await postCodebase(codebasePath, options.service);
   });
 
-  console.log("Done!");
-
-//  console.log(result.data);
-};
-
-(async () => {
-  try {
-    await doIt();
-    console.log("END");
-  }
-  catch(e) {
-    console.log("Error", e);
-  }
-})();
-
-console.log("End of file");
+program.parse(process.argv);
