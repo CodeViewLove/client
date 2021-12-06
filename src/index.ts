@@ -13,9 +13,10 @@ program
   .description('Upload a codebase to CodeViewLove')
   .option('-s, --service <baseUrl>', 'Service base URL', 'https://codeviewlove.com')
   .action(async (codebasePath: string, options: { [k: string]: string }) => {
-    //const host = 'https://codeviewlove-production.netlify.app';
-//      const host = 'http://localhost:3000';
-      await postCodebase(codebasePath, options.service);
+    await postCodebase(codebasePath, options.service);
   });
+
+console.log('WARNING! This project is experimental. Expect breaking changes.');
+console.log();
 
 program.parse(process.argv);
