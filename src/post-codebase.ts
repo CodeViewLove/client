@@ -14,5 +14,8 @@ export const postCodebase = async (codebasePath: string, baseUrl: string) => {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
   });
 
-  console.log(`Codebase preview available at ${baseUrl}/previews/${result.data.id}`);
+  console.log(`Codebase preview available at:
+- Standalone page: ${baseUrl}/previews/${result.data.id}
+- Embedded in iframe: ${baseUrl}/embedded-previews/${result.data.id}
+`);
 };
