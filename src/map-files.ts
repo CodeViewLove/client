@@ -7,11 +7,17 @@ export type FileSpec = {
 
 export type FileMapping = { [path: string]: FileSpec };
 
+const ignoredFiles = ['/node_modules'];
+
 export const mapFiles = async (basePath: string, path?: string): Promise<FileMapping> => {
   const fullPath = path ? `${basePath}/${path}` : basePath;
   const stat = await fs.stat(fullPath);
 
   if (stat.isDirectory()) {
+    if (path && ignoredFiles.includes(path.toString())) {
+      return {};
+    }
+
     const files = await fs.readdir(fullPath);
     const all = await Promise.all(files.map(file => (
       mapFiles(basePath, path ? `${path}/${file}` : `/${file}`)
