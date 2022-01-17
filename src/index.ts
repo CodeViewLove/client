@@ -12,11 +12,9 @@ program
   .command('upload <codebasePath>')
   .description('Upload a codebase to CodeViewLove')
   .option('-s, --service <baseUrl>', 'Service base URL', 'https://codeviewlove.com')
+  .option('-i, --iframe-content', 'Return the iframe content', false)
   .action(async (codebasePath: string, options: { [k: string]: string }) => {
-    await postCodebase(codebasePath, options.service);
+    await postCodebase(codebasePath, options.service, !!options.iframeContent);
   });
-
-console.log('WARNING! This project is experimental. Expect breaking changes.');
-console.log();
 
 program.parse(process.argv);
